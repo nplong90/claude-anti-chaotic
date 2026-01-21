@@ -144,7 +144,8 @@ Enterprise-grade features and deployment options.
 - ✅ Updated Windows support guides
 - ✅ Tutorial library (Orchestration, Custom Agents, Cloud Integration)
 - ✅ API reference automation
-- 📋 Architecture guide expansion
+- ✅ Architecture guide expansion (Protocol & Lifecycle)
+- ✅ Workflow visualization (Mermaid diagrams)
 
 ### 4. Performance Optimization
 
