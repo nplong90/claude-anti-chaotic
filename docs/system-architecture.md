@@ -159,7 +159,18 @@ Tóm tắt kết quả đạt được trong 2-3 câu.
 - **Parallel Fan-Out**: Một Planner điều phối nhiều Researcher tìm hiểu các mảng khác nhau (Auth, DB, UI) cùng lúc.
 - **Verification Loop**: Cook viết code -> Tester chạy test -> Nếu lỗi, Debugger phân tích -> Quay lại Cook. Quy trình này lặp lại cho đến khi Pass 100%.
 
-#### 2.4 Quality & Safety Gates
+#### 2.4 Agent Lifecycle (Vòng đời của Agent)
+
+Mỗi Agent trong hệ thống tuân theo một vòng đời nghiêm ngặt để đảm bảo tính nhất quán và độ tin cậy:
+
+1.  **Summoning (Triệu hồi)**: Agent được kích hoạt thông qua lệnh slash (ví dụ: `/cook`) hoặc được gọi bởi một Agent khác. Tại giai đoạn này, Agent nhận "System Prompt" và các biến môi trường cần thiết.
+2.  **Context Loading (Nạp ngữ cảnh)**: Agent quét các file liên quan, đọc báo cáo từ các Agent trước đó trong thư mục `./plans/` và nạp các **Skills** cần thiết.
+3.  **Analysis & Planning (Phân tích & Lập kế hoạch)**: Agent tự phân tích nhiệm vụ và chia nhỏ thành các bước thực hiện. Nếu nhiệm vụ quá lớn, nó có thể triệu hồi các Sub-agents.
+4.  **Execution (Thực thi)**: Agent sử dụng các công cụ (`tools`) như Bash, Edit, Read để tương tác với mã nguồn hoặc hạ tầng Cloud.
+5.  **Self-Verification (Tự kiểm chứng)**: Trước khi kết thúc, Agent tự chạy các lệnh kiểm tra (linting, tests) để đảm bảo kết quả đạt tiêu chuẩn.
+6.  **Reporting & Handoff (Báo cáo & Bàn giao)**: Agent xuất file báo cáo Markdown và cập nhật trạng thái nhiệm vụ. Ngữ cảnh được đóng gói để Agent tiếp theo có thể sử dụng ngay lập tức.
+
+#### 2.5 Quality & Safety Gates
 Hệ thống áp dụng các "Cổng kiểm soát" tự động:
 - **Pre-commit**: Tự động linting và check secrets.
 - **Implementation Review**: Code-reviewer agent bắt buộc phải kiểm tra trước khi cho phép commit.

@@ -602,6 +602,29 @@ function example() {
 ```
 ````
 
+## Infrastructure as Code (IaC) Standards
+
+Khi triển khai hạ tầng lên các nền tảng Cloud (GCP, AWS, Azure), phải tuân thủ các tiêu chuẩn sau:
+
+### 1. Công cụ & Ngôn ngữ
+- **Ưu tiên**: Terraform hoặc các công cụ native như AWS CDK, Azure Bicep, Google Cloud Deployment Manager.
+- **Scripts**: Sử dụng gcloud CLI, AWS CLI, Azure CLI cho các tác vụ tự động hóa nhanh.
+
+### 2. Quản lý Bí mật (Secret Management)
+- **KHÔNG BAO GIỜ** lưu mật khẩu, API keys trong code IaC.
+- Sử dụng:
+  - **AWS**: Secrets Manager hoặc Parameter Store.
+  - **GCP**: Secret Manager.
+  - **Azure**: Key Vault.
+
+### 3. Quy tắc đặt tên Tài nguyên
+- Sử dụng kebab-case cho tất cả tên tài nguyên (ví dụ: `web-server-prod`, `data-bucket-backup`).
+- Luôn bao gồm thông tin về **Môi trường** (dev, staging, prod) trong tên tài nguyên.
+
+### 4. Bảo mật & Cô lập
+- Luôn triển khai tài nguyên trong VPC/VNet riêng biệt.
+- Sử dụng Security Groups/Firewall rules với chính sách "Chặn tất cả theo mặc định" (Deny all by default).
+
 ## Agent-Specific Standards
 
 ### Agent Definition Files
