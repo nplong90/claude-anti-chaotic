@@ -26,6 +26,13 @@ Personal Claude Code workflows và AI agent orchestration cho phát triển ph�
 └── README.md               # This file
 ```
 
+## Tài liệu hướng dẫn (Tutorials)
+
+Xem các hướng dẫn chi tiết về cách sử dụng hệ thống AI Agent:
+
+- [01: Cơ bản về Agent Orchestration](docs/tutorials/01-agent-orchestration-basics.md)
+- [02: Tùy chỉnh Custom Agent (Sắp có)](docs/tutorials/02-custom-agent-creation.md)
+
 ## Yêu cầu
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed
