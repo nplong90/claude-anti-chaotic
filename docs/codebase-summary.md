@@ -24,6 +24,7 @@ claude-anti-chaotic/
 ├── .github/             # GitHub Actions workflows
 │   └── workflows/       # CI/CD automation
 ├── docs/                # Project documentation
+│   ├── tutorials/       # Tutorial library (Orchestration, Custom Agents, Cloud)
 │   └── research/        # Research reports directory
 ├── guide/               # User guides and references
 ├── plans/               # Implementation plans and reports
@@ -107,6 +108,12 @@ claude-anti-chaotic/
 - **DevOps** (`devops/`) - Cloudflare edge platform, Docker containerization, Google Cloud Platform
   - 11 reference files (<250 lines each), 2 Python utilities, 45 tests
   - Consolidates: Cloudflare (5 skills), Docker, GCloud
+- **Google Cloud** (`google-cloud/`) - Cloud Run, GKE, BigQuery, Cloud Storage
+  - 3 reference files (cheatsheet, best practices)
+- **Amazon Web Services** (`amazon-web-services/`) - Lambda, S3, EC2, DynamoDB
+  - 3 reference files (cheatsheet, best practices)
+- **Microsoft Azure** (`microsoft-azure/`) - App Service, Azure Functions, AKS, Blob Storage
+  - 3 reference files (cheatsheet, best practices)
 - **Databases** (`databases/`) - MongoDB document database, PostgreSQL relational database
   - 8 reference files, 3 Python utilities
   - Consolidates: MongoDB, PostgreSQL
