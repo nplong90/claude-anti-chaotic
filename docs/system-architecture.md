@@ -117,40 +117,53 @@ temperature: 0.1
 - `google/gemini-2.5-flash` - Cost-effective (docs-manager)
 - `grok-code` - Specialized (git-manager)
 
-#### 2.3 Agent Communication Protocol
+#### 2.3 Agent Communication Protocol (Orchestration Protocol)
 
-**Communication Medium**: File system (markdown files)
-**Report Location**: `./plans/<plan-name>/reports/`
-**Naming Convention**: `YYMMDD-from-[source]-to-[dest]-[task]-report.md`
+**Giao thức Orchestration** là trái tim của hệ thống, định nghĩa cách các Agent trao đổi thông tin để đạt được mục tiêu chung mà không làm mất ngữ cảnh (context).
 
-**Report Structure**:
+**Cơ chế hoạt động:**
+1.  **Context Preservation**: Mỗi Agent khi hoàn thành nhiệm vụ phải xuất ra một báo cáo (Report) chứa toàn bộ dữ liệu quan trọng để Agent tiếp theo có thể kế thừa mà không cần đọc lại toàn bộ lịch sử hội thoại.
+2.  **State Management**: Trạng thái của quy trình được lưu trữ trong các file tại thư mục `./plans/<plan-name>/`.
+3.  **Hand-off Rules**:
+    *   **Planner** phải cung cấp một "Implementation Plan" rõ ràng.
+    *   **Researcher** phải cung cấp "Technical Findings" kèm link tham khảo.
+    *   **Cook/Developer** phải báo cáo danh sách các file đã thay đổi.
+    *   **Tester** phải cung cấp kết quả Pass/Fail và logs lỗi.
+
+**Định dạng báo cáo (Report Format):**
+Báo cáo sử dụng Markdown để tối ưu cho việc AI đọc và con người kiểm tra:
+
 ```markdown
-# Task Report: [Task Name]
+# [Agent-Name] Task Report: [Task-ID]
 
-**From**: [Source Agent]
-**To**: [Destination Agent]
-**Date**: YYYY-MM-DD
-**Status**: [Complete|In Progress|Blocked]
+## Metadata
+- **Plan**: [Path-to-Plan]
+- **Status**: [Success|Failure|Blocked]
+- **Dependencies**: [List-of-Agents]
 
-## Summary
-Brief overview of findings/results
+## Executive Summary
+Tóm tắt kết quả đạt được trong 2-3 câu.
 
-## Details
-Comprehensive information
+## Technical Details
+- **Changes**: [List of modified files/components]
+- **Decisions**: [Key architectural decisions made]
+- **Research**: [Links to documentation/findings]
 
-## Recommendations
-Actionable next steps
-
-## Concerns
-Issues, blockers, or questions
+## Hand-off for [Next-Agent]
+- **Instructions**: Cần làm gì tiếp theo.
+- **Context**: Dữ liệu cần thiết cho bước sau.
 ```
 
-**Communication Patterns**:
-1. **Request-Response**: Agent A requests, Agent B responds
-2. **Broadcast**: Agent publishes report for multiple consumers
-3. **Chain**: Sequential handoffs (A → B → C)
-4. **Fan-Out**: Parallel execution (A spawns B, C, D)
-5. **Fan-In**: Collect results from parallel agents
+**Mẫu giao tiếp (Communication Patterns):**
+- **Sequential**: Luồng đi thẳng (A -> B -> C). Phù hợp cho tính năng đơn giản.
+- **Parallel Fan-Out**: Một Planner điều phối nhiều Researcher tìm hiểu các mảng khác nhau (Auth, DB, UI) cùng lúc.
+- **Verification Loop**: Cook viết code -> Tester chạy test -> Nếu lỗi, Debugger phân tích -> Quay lại Cook. Quy trình này lặp lại cho đến khi Pass 100%.
+
+#### 2.4 Quality & Safety Gates
+Hệ thống áp dụng các "Cổng kiểm soát" tự động:
+- **Pre-commit**: Tự động linting và check secrets.
+- **Implementation Review**: Code-reviewer agent bắt buộc phải kiểm tra trước khi cho phép commit.
+- **Documentation Sync**: Docs-manager tự động chạy sau mỗi thay đổi lớn để cập nhật PDR và Roadmap.
 
 ### 3. Command Layer
 
