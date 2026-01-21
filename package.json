@@ -1,0 +1,12 @@
+{
+  "name": "claude-anti-chaotic",
+  "version": "1.0.0",
+  "description": "Claude Anti-Chaotic - Personalized Claude Code workflows",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
