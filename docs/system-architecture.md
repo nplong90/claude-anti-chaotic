@@ -170,7 +170,23 @@ Mỗi Agent trong hệ thống tuân theo một vòng đời nghiêm ngặt đ�
 5.  **Self-Verification (Tự kiểm chứng)**: Trước khi kết thúc, Agent tự chạy các lệnh kiểm tra (linting, tests) để đảm bảo kết quả đạt tiêu chuẩn.
 6.  **Reporting & Handoff (Báo cáo & Bàn giao)**: Agent xuất file báo cáo Markdown và cập nhật trạng thái nhiệm vụ. Ngữ cảnh được đóng gói để Agent tiếp theo có thể sử dụng ngay lập tức.
 
-#### 2.5 Quality & Safety Gates
+#### 2.6 Performance & Efficiency Layer (Tầng Hiệu suất)
+
+Hệ thống tích hợp các kỹ thuật tối ưu để giảm độ trễ và chi phí vận hành:
+
+1.  **Context Caching Strategy**:
+    *   **Level 1 (Static)**: Nạp các file cấu hình cốt lõi (`CLAUDE.md`, `codebase-summary.md`) một lần duy nhất.
+    *   **Level 2 (Dynamic)**: Kế thừa các kết quả nghiên cứu (research reports) cũ nếu nhiệm vụ tương tự, tránh gọi API tìm kiếm trùng lặp.
+2.  **Token Usage Monitoring**:
+    *   Sử dụng script `scripts/token-usage-monitor.py` để thống kê và báo cáo lượng token tiêu thụ hàng ngày.
+    *   Cảnh báo khi một nhiệm vụ vượt quá ngưỡng token định mức.
+3.  **Prompt Compression**:
+    *   Tự động rút gọn ngữ cảnh bằng cách loại bỏ các thông tin dư thừa (như lịch sử chat không liên quan) trước khi gửi cho Sub-agents.
+    *   Sử dụng định dạng Markdown tối giản (bảng, danh sách) để tối ưu hóa mật độ thông tin.
+4.  **Parallel Execution Engine**:
+    *   Khả năng triệu hồi nhiều Sub-agents song song (Fan-out) để xử lý các phần vụ độc lập, giúp giảm thời gian chờ đợi (Wall-clock time).
+
+#### 2.7 Quality & Safety Gates
 Hệ thống áp dụng các "Cổng kiểm soát" tự động:
 - **Pre-commit**: Tự động linting và check secrets.
 - **Implementation Review**: Code-reviewer agent bắt buộc phải kiểm tra trước khi cho phép commit.
